@@ -1,0 +1,35 @@
+{
+    "version": "0.2.0",
+        "showDevDebugOutput": true,
+            "configurations": [
+                {
+                    "name": "Debug (Blinky)",
+                    "type": "cortex-debug",
+                    "preLaunchTask": "build-blinky",
+                    "request": "launch",
+                    "servertype": "openocd",
+                    "cwd": "${workspaceRoot}",
+                    "executable": "${workspaceRoot}/target/thumbv7em-none-eabihf/debug/examples/blinky",
+                    "device": "STM32F446RE",
+                    "svdFile": "${workspaceRoot}/STM32F446.svd",
+                    "configFiles": [
+                        "interface/stlink.cfg",
+                        "target/stm32f4x.cfg"
+                    ],
+                    "swoConfig": {
+                        "enabled": true,
+                        "cpuFrequency": 100000000,
+                        "swoFrequency": 2000000,
+                        "source": "probe",
+                        "decoders": [
+                            {
+                                "type": "console",
+                                "label": "ITM",
+                                "port": 0
+                            }
+                        ]
+                    },
+                    "runToEntryPoint": "main",
+                },
+            ]
+}
