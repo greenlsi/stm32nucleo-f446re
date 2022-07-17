@@ -1,9 +1,9 @@
-source [find interface/stlink.cfg]
-transport select hla_swd
-
-# increase working area to 64KB
-set WORKAREASIZE 0x10000
-
-source [find target/stm32f4x.cfg]
-
-reset_config srst_only
+# Not used by the VS Code Debugger, only `cargo run`
+target remote :3333
+set print asm-demangle on
+set print pretty on
+load
+monitor tpiu config internal itm.txt uart off 8000000
+monitor itm port 0 on
+break main
+continue

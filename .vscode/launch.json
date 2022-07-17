@@ -10,7 +10,7 @@
                     "servertype": "openocd",
                     "cwd": "${workspaceRoot}",
                     "executable": "${workspaceRoot}/target/thumbv7em-none-eabihf/debug/examples/blinky",
-                    "device": "STM32F446RE",
+                    "device": "STM32F446RETx",
                     "svdFile": "${workspaceRoot}/STM32F446.svd",
                     "configFiles": [
                         "interface/stlink.cfg",
@@ -26,6 +26,33 @@
                                 "type": "console",
                                 "label": "ITM",
                                 "port": 0
+                            }
+                        ]
+                    },
+                    "runToEntryPoint": "main",
+                },
+                {
+                    "name": "Debug (Hello)",
+                    "type": "cortex-debug",
+                    "preLaunchTask": "build-hello",
+                    "request": "launch",
+                    "servertype": "openocd",
+                    "cwd": "${workspaceRoot}",
+                    "executable": "${workspaceRoot}/target/thumbv7em-none-eabihf/debug/examples/hello",
+                    "device": "STM32F446RETx",
+                    "svdFile": "${workspaceRoot}/STM32F446.svd",
+                    "configFiles": [
+                        "interface/stlink.cfg",
+                        "target/stm32f4x.cfg"
+                    ],
+                    "rttConfig": {
+                        "enabled": true,
+                        "address": "auto",
+                        "decoders": [
+                            {
+                                "port": 0,
+                                "type": "console",
+                                "label": "RTT"
                             }
                         ]
                     },

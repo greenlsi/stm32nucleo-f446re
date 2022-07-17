@@ -2,16 +2,15 @@
 #![no_main]
 #![no_std]
 
-#[allow(unused)]
-use panic_halt;
+use cortex_m_rt::entry;
+use panic_halt as _;
 
-use cortex_m_rt as rt;
-use stm32f4xx_hal as hal;
-use hal::prelude::*; // needed for the GpioExt trait (-> .split)
+use hal::prelude::*;
+use stm32f4xx_hal as hal; // needed for the GpioExt trait (-> .split)
 
-#[rt::entry]
+#[entry]
 fn main() -> ! {
-    if let Some(peripherals) = hal::stm32::Peripherals::take() {
+    if let Some(peripherals) = hal::pac::Peripherals::take() {
         let gpioa = peripherals.GPIOA.split(); // + sets RCC->AHB1ENR GPIOA bit
 
         // .into_push_pull_output performs three steps
@@ -25,11 +24,11 @@ fn main() -> ! {
 
         loop {
             // .is_high reads IDR
-            if button.is_high().unwrap() {
+            if button.is_high() {
                 // .set_low uses BSRR
-                led.set_low().unwrap();
+                led.set_low();
             } else {
-                led.set_high().unwrap();
+                led.set_high();
             }
         }
     }
